@@ -1,33 +1,32 @@
-APPROVED_JOBS = [
-    "Developer",
-    "Designer",
-    "Manager",
-    "CEO",
-    "CTO",
-    "Intern",
+# lib/person.py
+
+approved_jobs = [
+    "Admin",
+    "Customer Service",
+    "Finance",
+    "General Management",
+    "Human Resources",
+    "ITC",
+    "Legal",
+    "Marketing",
+    "Production",
+    "Purchasing",
+    "Research & Development",
+    "Sales"
 ]
 
 class Person:
-    def __init__(self, name="", job=""):
-        # --- Name validation first ---
-        if not isinstance(name, str) or not (1 <= len(name) <= 25):
-            print("Name must be string between 1 and 25 characters.")
-            self._name = None
-            self._job = None
-            return  # short-circuit: do NOT process job
-        self._name = name.title()
+    def __init__(self, name=None, job=None):
+        if job is not None:
+            self.job = job
+        if name is not None:
+            self.name = name
 
-        # --- Job validation ---
-        if job and job not in APPROVED_JOBS:
-            print("Job must be in list of approved jobs.")
-            self._job = None
-        else:
-            self._job = job if job else None
 
     # --- Name property ---
     @property
     def name(self):
-        return self._name
+        return getattr(self, "_name", None)
 
     @name.setter
     def name(self, value):
@@ -39,11 +38,11 @@ class Person:
     # --- Job property ---
     @property
     def job(self):
-        return self._job
+        return getattr(self, "_job", None)
 
     @job.setter
     def job(self, value):
-        if value not in APPROVED_JOBS:
+        if value and value not in approved_jobs:
             print("Job must be in list of approved jobs.")
             return
-        self._job = value
+        self._job = value if value else None
